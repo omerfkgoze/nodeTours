@@ -9,6 +9,18 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
 
+const checkID = (req, res, next, val) => {
+  console.log(`Tour id is: ${val}`);
+
+  if (+req.params.id > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+  next();
+};
+
 // GET ALL TOURS
 const getAllTours = (req, res) => {
   console.log(req.requestTime);
@@ -68,4 +80,4 @@ const deleteTour = (req, res) => {
   });
 };
 
-export { getAllTours, getTour, createTour, updateTour, deleteTour };
+export { getAllTours, getTour, createTour, updateTour, deleteTour, checkID };
