@@ -1,5 +1,5 @@
 import express from 'express';
-import tourRouter from './routes/tourRouter.js';
+import tourRouter from './routes/tourRoutes.js';
 
 const app = express();
 
