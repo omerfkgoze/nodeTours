@@ -1,9 +1,12 @@
 import express from 'express';
+import morgan from 'morgan';
+
 import tourRouter from './routes/tourRoutes.js';
 
 const app = express();
 
 // MIDDLEWARES
+app.use(morgan('dev'));
 app.use(express.json());
 
 app.use((req, res, next) => {
