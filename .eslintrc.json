@@ -18,7 +18,6 @@
       "error",
       { "argsIgnorePattern": "req|res|next|val|err" }
     ],
-    "import/extensions": "off",
-    "node/no-unsupported-features/es-syntax": ["off"]
+    "import/extensions": "off"
   }
 }
