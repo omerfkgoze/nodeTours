@@ -1,4 +1,5 @@
 import fs from 'fs';
+import Tour from '../models/tourModel.js';
 
 const tours = JSON.parse(fs.readFileSync('./dev-data/data/tours-simple.json'));
 
@@ -38,7 +39,7 @@ const getAllTours = (req, res) => {
 
 // GET A TOUR
 const getTour = (req, res) => {
-  const tour = tours.find(el => el.id === +req.params.id);
+  const tour = tours.find((el) => el.id === +req.params.id);
 
   res.status(200).json({
     status: 'success',
@@ -57,12 +58,12 @@ const createTour = (req, res) => {
   fs.writeFile(
     './dev-data/data/tours-simple.json',
     JSON.stringify(tours),
-    err => {
+    (err) => {
       res.status(201).json({
         status: 'success',
         data: { tour: newTour },
       });
-    }
+    },
   );
 };
 
