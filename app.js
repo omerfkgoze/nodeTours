@@ -1,10 +1,5 @@
 import express from 'express';
 import morgan from 'morgan';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 ////
 //! bug: getting undefined without this line of code
@@ -28,7 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static('public'));
 
 // ROUTES
 app.use('/api/v1/tours', tourRouter);
