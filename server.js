@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import app from './app.js';
 
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: './.config.env' });
 
 // console.log(process.env);
 

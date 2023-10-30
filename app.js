@@ -7,8 +7,8 @@ import userRouter from './routes/userRoutes.js';
 const app = express();
 
 // MIDDLEWARES
-dotenv.config({ path: './config.env' });
-// console.log(process.env.NODE_ENV);
+dotenv.config({ path: './.config.env' });
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 app.use(express.json());
 
