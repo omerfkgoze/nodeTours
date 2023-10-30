@@ -1,13 +1,6 @@
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
-);
+const tours = JSON.parse(fs.readFileSync('./dev-data/data/tours-simple.json'));
 
 const checkID = (req, res, next, val) => {
   console.log(`Tour id is: ${val}`);
@@ -62,7 +55,7 @@ const createTour = (req, res) => {
   tours.push(newTour);
 
   fs.writeFile(
-    `${__dirname}/../dev-data/data/tours-simple.json`,
+    './dev-data/data/tours-simple.json',
     JSON.stringify(tours),
     err => {
       res.status(201).json({
