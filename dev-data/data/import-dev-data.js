@@ -42,9 +42,9 @@ const deleteData = async () => {
 
 // CONTROL FLOW
 if (process.argv[2] === '--import') {
-  // node dev-data/data/import-dev-data.js --import
+  // node import-dev-data.js --import
   importData();
 } else if (process.argv[2] === '--delete') {
-  // node dev-data/data/import-dev-data.js --delete
+  // node import-dev-data.js --delete
   deleteData();
 }
