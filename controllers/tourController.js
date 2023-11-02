@@ -8,8 +8,6 @@ const getAllTours = async (req, res) => {
     //FILTERING
     const queryObj = { ...req.query };
 
-    console.log(queryObj); // filter details before deleting excluded fields
-
     // excluded fields from queryObj to be used in filtering
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
@@ -17,8 +15,6 @@ const getAllTours = async (req, res) => {
     let queryStr = JSON.stringify(queryObj);
 
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`); // operators integrated with mongoDB operators
-
-    console.log(queryStr); // filter details after deleting excluded fields
 
     let query = Tour.find(JSON.parse(queryStr)); // ask mongoDB to find documents with queryStr
 
@@ -39,6 +35,10 @@ const getAllTours = async (req, res) => {
       const fields = req.query.fields.split(',').join(' ');
 
       query = query.select(fields);
+
+      // default field limiting
+    } else {
+      // query = query.select('-__v');
     }
 
     // EXECUTE QUERY
