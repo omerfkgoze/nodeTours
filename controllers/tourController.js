@@ -21,9 +21,21 @@ const getAllTours = async (req, res) => {
 
     console.log(queryStr); // filter details after deleting excluded fields
 
-    // todo: will be change with let
-    const query = Tour.find(JSON.parse(queryStr));
+    let query = Tour.find(JSON.parse(queryStr));
 
+    // SORTING
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+
+      query = query.sort(sortBy);
+      query = query.sort(req.query.sort);
+
+      // default sorting
+    } else {
+      query = query.sort('-createdAt');
+    }
+
+    // EXECUTE QUERY
     const tours = await query;
 
     // SEND RESPONSE
