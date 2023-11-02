@@ -3,8 +3,30 @@ import Tour from '../models/tourModel.js';
 // GET ALL TOURS
 const getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find();
+    // BUILD QUERY
 
+    //FILTERING
+    const queryObj = { ...req.query };
+
+    // excluded fields from queryObj to be used in filtering
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
+
+    console.log(req.query); // filter details before deleting excluded fields
+
+    let queryStr = JSON.stringify(queryObj);
+
+    // operators integrated with mongoDB operators
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+
+    console.log(queryStr); // filter details after deleting excluded fields
+
+    // todo: will be change with let
+    const query = Tour.find(JSON.parse(queryStr));
+
+    const tours = await query;
+
+    // SEND RESPONSE
     res.status(200).json({
       status: 'success',
       results: tours.length,
