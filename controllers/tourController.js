@@ -8,20 +8,19 @@ const getAllTours = async (req, res) => {
     //FILTERING
     const queryObj = { ...req.query };
 
+    console.log(queryObj); // filter details before deleting excluded fields
+
     // excluded fields from queryObj to be used in filtering
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    console.log(req.query); // filter details before deleting excluded fields
-
     let queryStr = JSON.stringify(queryObj);
 
-    // operators integrated with mongoDB operators
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`); // operators integrated with mongoDB operators
 
     console.log(queryStr); // filter details after deleting excluded fields
 
-    let query = Tour.find(JSON.parse(queryStr));
+    let query = Tour.find(JSON.parse(queryStr)); // ask mongoDB to find documents with queryStr
 
     // SORTING
     if (req.query.sort) {
@@ -33,6 +32,13 @@ const getAllTours = async (req, res) => {
       // default sorting
     } else {
       query = query.sort('-createdAt');
+    }
+
+    // FIELD LIMITING
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+
+      query = query.select(fields);
     }
 
     // EXECUTE QUERY
