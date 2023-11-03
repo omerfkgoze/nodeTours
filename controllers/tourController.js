@@ -1,5 +1,13 @@
 import Tour from '../models/tourModel.js';
 
+const aliasTopTours = (req, res, next) => {
+  req.query.limit = '5';
+  req.query.sort = '-ratingsAverage,price';
+  req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
+
+  next();
+};
+
 // GET ALL TOURS
 const getAllTours = async (req, res) => {
   try {
@@ -140,4 +148,11 @@ const deleteTour = async (req, res) => {
   }
 };
 
-export { getAllTours, getTour, createTour, updateTour, deleteTour };
+export {
+  getAllTours,
+  getTour,
+  createTour,
+  updateTour,
+  deleteTour,
+  aliasTopTours,
+};
