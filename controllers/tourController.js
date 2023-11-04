@@ -138,6 +138,69 @@ const getTourStats = async (req, res) => {
   }
 };
 
+const getMonthlyPlan = async (req, res) => {
+  try {
+    const year = +req.params.year;
+
+    const plan = await Tour.aggregate([
+      {
+        $unwind: '$startDates',
+      },
+      {
+        $match: {
+          startDates: {
+            $gte: new Date(`${year}-01-01`),
+            $lte: new Date(`${year}-12-31`),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            $month: '$startDates', // startDates property'sinin ayina gore gruplar
+          },
+          numTourStarts: {
+            $sum: 1, // tur baslangic sayisini donderir
+          },
+          tours: {
+            $push: '$name', // name property'sini tours array'ine ekler
+          },
+        },
+      },
+      {
+        $addFields: {
+          month: '$_id', // _id property'sini month property'sine ekler
+        },
+      },
+      {
+        $project: {
+          _id: 0, // _id property'sini gizler       },
+        },
+      },
+      {
+        $sort: {
+          numTourStarts: -1, // descending
+        },
+      },
+      {
+        $limit: 12, // ilk 12 ayi donderir (query limit ile ayni)
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        plan,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
 export {
   getAllTours,
   getTour,
@@ -146,4 +209,5 @@ export {
   deleteTour,
   aliasTopTours,
   getTourStats,
+  getMonthlyPlan,
 };
