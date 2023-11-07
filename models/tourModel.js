@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import slugify from 'slugify';
+import validator from 'validator';
 
 // create a schema
 const tourSchema = new mongoose.Schema(
@@ -17,6 +18,7 @@ const tourSchema = new mongoose.Schema(
         10,
         'A tour name must have more or equal than 10 characters.',
       ],
+      validate: [validator.isAlpha, 'Tour name must only contain characters.'],
     },
     slug: String,
     duration: {
