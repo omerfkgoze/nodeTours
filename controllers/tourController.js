@@ -63,21 +63,14 @@ const updateTour = catchAsync(async (req, res) => {
 });
 
 // DELETE A TOUR
-const deleteTour = async (req, res) => {
+const deleteTour = catchAsync(async (req, res) => {
   await Tour.findByIdAndDelete(req.params.id);
 
-  try {
-    res.status(204).json({
-      status: 'success',
-      data: null,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
 
 const getTourStats = async (req, res) => {
   try {
