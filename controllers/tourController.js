@@ -30,19 +30,12 @@ const getAllTours = catchAsync(async (req, res) => {
 });
 
 // GET A TOUR
-const getTour = async (req, res) => {
-  try {
-    res.status(200).json({
-      // status: 'success',
-      // data: { tours: tour },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+const getTour = catchAsync(async (req, res) => {
+  res.status(200).json({
+    // status: 'success',
+    // data: { tours: tour },
+  });
+});
 
 // CREATE A TOUR
 const createTour = catchAsync(async (req, res) => {
