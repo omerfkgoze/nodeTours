@@ -31,9 +31,11 @@ const getAllTours = catchAsync(async (req, res) => {
 
 // GET A TOUR
 const getTour = catchAsync(async (req, res) => {
+  const tour = await Tour.findById(req.params.id);
+
   res.status(200).json({
-    // status: 'success',
-    // data: { tours: tour },
+    status: 'success',
+    data: { tours: tour },
   });
 });
 
