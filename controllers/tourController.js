@@ -50,24 +50,17 @@ const createTour = catchAsync(async (req, res) => {
 });
 
 // UPDATE A TOUR
-const updateTour = async (req, res) => {
+const updateTour = catchAsync(async (req, res) => {
   const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
 
-  try {
-    res.status(200).json({
-      status: 'success',
-      data: { tour },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    data: { tour },
+  });
+});
 
 // DELETE A TOUR
 const deleteTour = async (req, res) => {
