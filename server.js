@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import app from './app.js';
 
+//! It needs to be defined globally. As it is, it does not work in app js.
 // handle uncaught exceptions
 process.on('uncaughtException', (err) => {
   console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
