@@ -36,6 +36,13 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+userSchema.pre('save', async function (next) {
+  // only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
+
+  next();
+});
+
 const User = mongoose.model('User', userSchema);
 
 export default User;
