@@ -26,7 +26,7 @@ const signup = catchAsync(async (req, res, next) => {
 });
 
 // LOGIN A USER
-const login = (req, res, next) => {
+const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   // 1) CHECK IF EMAIL AND PASSWORD EXIST
@@ -35,6 +35,11 @@ const login = (req, res, next) => {
   }
 
   // 2) CHECK IF USER EXISTS && PASSWORD IS CORRECT
+  const user = await User.findOne({ email }).select('+password'); // select password because it is not selected by default
+
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    return next(new AppError('Incorrect email or password', 401));
+  }
 
   // 3) IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
   const token = '';
@@ -43,6 +48,6 @@ const login = (req, res, next) => {
     status: 'success',
     token,
   });
-};
+});
 
 export { signup, login };
