@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import catchAsync from '../utils/catchAsync.js';
+import AppError from '../utils/appError.js';
 
 // CREATE A USER
 const signup = catchAsync(async (req, res, next) => {
@@ -24,4 +25,24 @@ const signup = catchAsync(async (req, res, next) => {
   });
 });
 
-export default signup;
+// LOGIN A USER
+const login = (req, res, next) => {
+  const { email, password } = req.body;
+
+  // 1) CHECK IF EMAIL AND PASSWORD EXIST
+  if (!email || !password) {
+    return next(new AppError('Please provide email and password', 400));
+  }
+
+  // 2) CHECK IF USER EXISTS && PASSWORD IS CORRECT
+
+  // 3) IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
+  const token = '';
+
+  res.status(200).json({
+    status: 'success',
+    token,
+  });
+};
+
+export { signup, login };
