@@ -3,6 +3,13 @@ import User from '../models/userModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 
+//* payload, secret, and options
+const signToken = function (id) {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+};
+
 // CREATE A USER
 const signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
@@ -13,10 +20,7 @@ const signup = catchAsync(async (req, res, next) => {
   });
 
   // CREATE A TOKEN
-  //* payload, secret, and options
-  const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
+  const token = signToken(newUser._id);
 
   res.status(201).json({
     status: 'success',
@@ -42,7 +46,7 @@ const login = catchAsync(async (req, res, next) => {
   }
 
   // 3) IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
-  const token = '';
+  const token = signToken(user._id);
 
   res.status(200).json({
     status: 'success',
