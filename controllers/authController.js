@@ -1,3 +1,4 @@
+import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import catchAsync from '../utils/catchAsync.js';
@@ -65,8 +66,6 @@ const protect = catchAsync(async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1];
   }
 
-  console.log(token);
-
   if (!token) {
     return next(
       new AppError('You are not logged in! Please log in to get access.', 401),
@@ -74,6 +73,7 @@ const protect = catchAsync(async (req, res, next) => {
   }
 
   // 2) VERIFY TOKEN
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // 3) CHECK IF USER STILL EXISTS
 
