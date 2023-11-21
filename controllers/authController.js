@@ -54,4 +54,15 @@ const login = catchAsync(async (req, res, next) => {
   });
 });
 
-export { signup, login };
+const protect = catchAsync(async (req, res, next) => {
+  // 1) GET TOKEN AND CHECK IF IT EXISTS
+
+  // 2) VERIFY TOKEN
+
+  // 3) CHECK IF USER STILL EXISTS
+
+  // 4) CHECK IF USER CHANGED PASSWORD AFTER THE TOKEN WAS ISSUED
+  next();
+});
+
+export { signup, login, protect };
