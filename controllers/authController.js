@@ -84,7 +84,7 @@ const protect = catchAsync(async (req, res, next) => {
     );
   }
 
-  // 4) CHECK IF USER CHANGED PASSWORD AFTER THE TOKEN WAS ISSUED
+  //! 4) CHECK IF USER CHANGED PASSWORD AFTER THE TOKEN WAS ISSUED
   currentUser.changedPasswordAfter(decoded.iat);
 
   next();
