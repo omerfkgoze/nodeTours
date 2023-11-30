@@ -13,7 +13,7 @@ const sendEmail = async (options) => {
 
   // 2) Define the email options
   const mailOptions = {
-    from: 'NodeTours <process.env.EMAIL_FROM>',
+    from: `NodeTours <${process.env.EMAIL_FROM}>`,
     to: options.email,
     subject: options.subject,
     text: options.message,
