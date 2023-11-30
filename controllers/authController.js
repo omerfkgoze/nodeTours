@@ -111,4 +111,21 @@ const restrictTo = function (...roles) {
   };
 };
 
-export { signup, login, protect, restrictTo };
+const forgotPassword = catchAsync(async (req, res, next) => {
+  // 1) GET USER BASED ON POSTED EMAIL
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    return next(new AppError('There is no user with that email address.', 404));
+  }
+
+  // 2) GENERATE THE RANDOM RESET TOKEN
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false }); // turn off all validators
+
+  // 3) SEND IT TO USER'S EMAIL
+});
+
+const resetPassword = catchAsync(async (req, res, next) => {});
+
+export { signup, login, protect, restrictTo, forgotPassword, resetPassword };
