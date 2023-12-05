@@ -158,3 +158,5 @@ const forgotPassword = catchAsync(async (req, res, next) => {
 const resetPassword = catchAsync(async (req, res, next) => {});
 
 export { signup, login, protect, restrictTo, forgotPassword, resetPassword };
+
+// Example for team
