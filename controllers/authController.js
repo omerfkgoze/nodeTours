@@ -95,7 +95,7 @@ const protect = catchAsync(async (req, res, next) => {
   }
 
   // GRANT ACCESS TO PROTECTED ROUTE
-  req.user = currentUser;
+  req.user = currentUser; // set the user to the request object
   next();
 });
 
