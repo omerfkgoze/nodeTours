@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import app from './app.js';
 
+//
 // Ensure global definition for proper functionality in app.js
 // The current scope may prevent it from working as intended.
 // handle uncaught exceptions
